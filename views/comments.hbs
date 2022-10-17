@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>comments</title>
+</head>
+<body>
+    <nav>
+    <ul id="menu">
+    <h1>comments form</h1>
+        <li class="logo"><a href="http://localhost:3000/home">Home</a></li>
+        <li class="item"><a href="http://localhost:3000/home/new_post">Newpost</a></li>
+        <li class="item"><a href="http://localhost:3000/profile">Profile</a></li>
+    </ul>
+    </nav>
+    <div class="bg">
+        <div class="box">
+            <div id="total">
+
+            </div>
+        <form action="" method="post">
+            <textarea  type="text" name="massage" required placeholder="massage" rows="4" cols="36"></textarea>
+            <button type="submit">submit</button>  <a href="http://localhost:3000/home">Back</a>
+        </form>
+        </div>
+    </div>
+    <script>
+        url = 'http://localhost:3000/home/info'
+
+        async function fetch_data(url){
+            const eleRoot = document.getElementById('total');
+            const res = await fetch(url,{
+                method: 'GET'
+            })
+            var {totaldata,post_comments} = await res.json();
+            let data = post_comments
+            let curUrl = window.location.href
+            var user_id2 = curUrl.slice(curUrl.length -6,curUrl.length -5)
+
+            data.forEach(element => {
+                if (user_id2 == element.post_id){
+
+                    const comit = document.createElement("div");
+                    comit.classList.add('comit');
+                    eleRoot.appendChild(comit);
+
+                    var eleH3 = document.createElement("h3");
+                    comit.appendChild(eleH3);
+                    eleH3.textContent = `${element.user_email}`
+
+                    var eleH3 = document.createElement("h5");
+                    comit.appendChild(eleH3);
+                    eleH3.textContent = `${element.date}`
+
+                    const elep = document.createElement("h4");
+                    comit.appendChild(elep);
+                    elep.textContent = `${element.feeling_msg}`
+
+                    var link = document.createElement('a');
+                    link.setAttribute('href', `http://localhost:3000/del/:${element.id}`);
+                    link.textContent = `del`;
+                    comit.appendChild(link);
+                    }
+                })}   
+            fetch_data(url)
+    </script>
+    <style>
+        *{
+            align-items: center;
+            width: auto;
+            margin: 20px 0;
+
+        }
+        body{
+            background-color: rgba(156, 155, 155, 0.206);
+        }
+        .bg{
+            height: 70vh;
+            width: 47vh;
+            border-radius: 50%;
+            display: flex;
+            margin: 0 auto;
+        }
+        .box{
+            margin:  0 10px;
+        }
+        h1{
+            font-family: monospace;
+            font-weight: 600;
+            font-size: 45px;
+        }
+        h4{
+            background: rgba(156, 155, 155, 0.206);
+            padding: 10px;
+        }
+        h5{
+            text-align: right;
+            margin-top: -2.5rem;
+        }
+        textarea{
+            border-radius: 10px;
+            padding: 5px;
+            background-color: azure;
+        }
+
+        .comit{
+            position: relative;
+            max-width: 640px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            display: flexbox;
+        }
+        textarea {
+            width: 100%;
+            border: none;
+            background: #E8E8E8;
+            padding: 5px 10px;
+            height: 50%;
+            border-radius: 5px 5px 0px 0px;
+            border-bottom: 2px solid #016BA8;
+            transition: all 0.5s;
+            margin-top: 15px;
+        }
+        button {
+            background: #016ba8;
+            color: #fff;
+            padding: 10px 10px;
+            border: none;
+            margin-top: 0px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.25);
+            transition: 1s all;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        a {
+            text-decoration: none;
+            background: #016ba8;
+            color: #fff;
+            padding: 10px 10px;
+            border: none;
+            margin-top: 0px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.25);
+            transition: 1s all;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+    </style>
+</body>
+</html>
