@@ -21,7 +21,7 @@ app.use('/del',veryfyToken,require('./routes/del'))
 app.get("/logout",veryfyToken, (req,res)=>{
     fs.writeFileSync('login.json',JSON.stringify({},null,3))
     res.cookie("user", undefined);
-    res.redirect(`http://localhost:${port}/login`);
+    res.redirect(`http://localhost:3000/login`);
 })
 
 
